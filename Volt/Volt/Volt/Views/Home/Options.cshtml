@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Options</title>
+</head>
+<body>
+    <h2>Options</h2>
+
+    <div>
+        <h4>Create Electronic</h4>
+        <form asp-action="CreateElectronic" asp-controller="Electronic">
+            <a href="/Electronic/CreateElectronic" class="btn btn-primary">Create Company</a>
+        </form>
+    </div>
+    <div>
+        <h4>Add Company</h4>
+        <form asp-controller="Company" asp-action="CreateCompany" method="post">
+            <a href="/Company/CreateCompany" class="btn btn-primary">Create Company</a>
+        </form>
+    </div>
+    <div>
+        <h4>Add Class of Electronics</h4>
+        <form asp-action="CreateClassElectronics" asp-controller="ElectronicClass" method="post">
+            <a href="/ElectronicClass/CreateElectronicClass" class="btn btn-primary">Create Company</a>
+        </form>
+    </div>
+    <div>
+        <h4>Delete Electronic</h4>
+        <form asp-action="DeleteElectronic" asp-controller="Electronic" method="post">
+            <a href="/Electronic/DeleteElectronic" class="btn btn-primary">Delete electronic</a>
+        </form>
+    </div>
+</body>
+</html>
