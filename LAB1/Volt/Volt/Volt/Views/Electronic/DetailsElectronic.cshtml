@@ -1,0 +1,68 @@
+﻿@model Volt.Models.Electronic
+
+@{
+    ViewData["Title"] = "DetailsElectronic";
+}
+
+<h1>Details Electronic</h1>
+
+<div>
+    <h4>Electronic</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PhotoOfElectronic)
+        </dt>
+        <dd class="col-sm-10">
+            <div style="width: 350px; height: 200px; overflow: hidden;">
+                <img style="width: auto; height: 100%;" src="@Model.PhotoOfElectronic" alt="Company Photo" alt="Фото електроніки" />
+            </div>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.CompanyName)
+        </dt>
+        <dd class="col-sm-10">
+            <a href="@Url.Action("DetailsCompany", "Company", new { id = Model.CompanyId })">
+                @Html.DisplayFor(model => model.Company.CompanyName)
+            </a>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Characteristic)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Characteristic)
+        </dd>
+        <dt class="col-sm-2">
+            <p>Buy</p>
+        </dt>
+        <dd>
+        <form asp-action="AddToCart" asp-controller="Home" asp-route-id="@Model?.ElectronicId" method="post">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-shopping-cart"></i> Додати до корзини
+            </button>
+        </form>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="EditElectronic" asp-route-id="@Model?.ElectronicId">Edit</a> |
+    <a href="@Url.Action("Index", "Home")">Back to List</a>
+</div>

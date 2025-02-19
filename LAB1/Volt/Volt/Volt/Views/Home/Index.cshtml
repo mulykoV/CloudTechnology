@@ -1,0 +1,43 @@
+﻿@using Volt.ViewModels;
+@model List<ElectronicViewModel>
+@{
+    ViewData["Title"] = "Volt";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Your favorite store of techniques</h1>
+    <p>
+        @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+        {
+            <input type="text" name="searchString" placeholder="Search by techniques name" />
+            <input type="submit" value="Search" />
+        }
+    </p>
+    <table class="table table-striped">
+        <tr>
+            <td><p><b>Фото</b></p></td>
+            <td><p><b>Модель</b></p></td>
+            <td><p><b>Клас</b></p></td>
+            <td><p><b>Ціна</b></p></td>
+            <td><p></p></td>
+        </tr>
+        @{
+            foreach (var electronic in Model)
+            {
+                <tr>
+                    <td>
+                    <div style="width: 350px; height: 200px; overflow: hidden;">
+                        <img style="width: auto; height: 100%;" src="@electronic.PhotoOfElectronic" alt="Фото електроніки" />
+                    </div>
+                    </td>
+                    <td>
+                           <b>@electronic.Model<br /></b>
+                        @electronic.Characteristic <p><a class="nav-link text-blue" asp-controller="Electronic" asp-action="DetailsElectronic" asp-route-id="@electronic.ElectronicId">Детальніше...</a></p>
+                    </td>
+                    <td><p><a class="nav-link text-dark" href="/ElectronicClass/DetailsElectronicClass/@electronic.ClassID">@electronic.Class</a></p></td>
+                    <td><p>@electronic.Price</p></td>
+                </tr>
+            }
+        }
+    </table>
+</div>

@@ -1,0 +1,22 @@
+﻿@model Volt.ViewModels.ShopCartViewModel
+
+<div class="container">
+    @if (!Model.shopCart.listShopItems.Any())
+    {
+        <p>Корзина пуста</p>
+    }
+    else
+    {
+        @foreach (var el in Model.shopCart.listShopItems)
+        {
+            <div class="alert alert-warning mt-3">
+                <b>Ґаджет: </b>@el.electronic.Model<br />
+                <b>Ціна: </b>@el.electronic.Price.ToString("c");
+            </div>
+        }
+        <hr />
+        <form asp-action="Buy" asp-controller="Electronic" method="get">
+            <button type="submit" class="btn btn-primary">Підтвердити покупку</button>
+        </form>
+    }
+</div>

@@ -1,0 +1,48 @@
+﻿@model Volt.ViewModels.CompanyViewModel
+
+@{
+    ViewData["Title"] = "DetailsCompany";
+}
+
+<h1>Details Company</h1>
+
+<div>
+    <h4>Company</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PhotoCompany)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.PhotoCompany" alt="Company Photo" height="100" width="200"/>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AboutCompany)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AboutCompany)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CountryOfCompany)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CountryOfCompany)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="EditCompany" asp-route-id="@Model?.CompanyId">Edit</a> |
+    <a href="@Url.Action("Index", "Home")">Back to List</a>
+</div>

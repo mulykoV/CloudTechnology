@@ -1,0 +1,36 @@
+﻿@model List<Volt.Models.Electronic>
+
+<h2>Delete Electronic</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+    <h3>Are you sure you want to delete these gadget?</h3>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var electronic in Model)
+                {
+                    <tr>
+                        <td>@electronic.Model</td>
+                        <td>
+                            <form asp-action="DeleteElectronic" asp-route-id="@electronic.ElectronicId" method="post">
+                                <input type="submit" value="Delete" class="btn btn-danger" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No books found.</p>
+}
+
+<a href="@Url.Action("Index", "Home")">Back to List</a>
