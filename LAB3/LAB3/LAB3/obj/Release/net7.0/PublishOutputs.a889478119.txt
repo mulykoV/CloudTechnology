@@ -1,0 +1,7 @@
+D:\Learning\Cloud Technology\LAB3\LAB3\LAB3\obj\Release\net7.0\PubTmp\Out\LAB3.exe
+D:\Learning\Cloud Technology\LAB3\LAB3\LAB3\obj\Release\net7.0\PubTmp\Out\appsettings.Development.json
+D:\Learning\Cloud Technology\LAB3\LAB3\LAB3\obj\Release\net7.0\PubTmp\Out\appsettings.json
+D:\Learning\Cloud Technology\LAB3\LAB3\LAB3\obj\Release\net7.0\PubTmp\Out\LAB3.dll
+D:\Learning\Cloud Technology\LAB3\LAB3\LAB3\obj\Release\net7.0\PubTmp\Out\LAB3.deps.json
+D:\Learning\Cloud Technology\LAB3\LAB3\LAB3\obj\Release\net7.0\PubTmp\Out\LAB3.runtimeconfig.json
+D:\Learning\Cloud Technology\LAB3\LAB3\LAB3\obj\Release\net7.0\PubTmp\Out\LAB3.pdb

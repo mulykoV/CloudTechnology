@@ -1,0 +1,4 @@
+key1 -- DS6GMb65UL7HauaHj5r97hMX6UZKIG2hBA8vtml1Dkl8Rvpk8d2XJQQJ99BBACYeBjFXJ3w3AAAaACOGsTRp
+key2 -- FJ1ycgHT31jNqYgpf20suKjmADUk5Z8BOoGF92QeQel5NziQDSOaJQQJ99BBACYeBjFXJ3w3AAAaACOG4oGy
+endpoint -- https://languagecloudtechnologyforstudy.cognitiveservices.azure.com/
+location -- eastus
