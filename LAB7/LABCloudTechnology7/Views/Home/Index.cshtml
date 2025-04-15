@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Аналіз тексту";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Аналіз тексту на особисту та медичну інформацію</h2>
+
+    <form method="post" asp-action="RecognizePII">
+        <div class="mb-3">
+            <label for="textInput" class="form-label">Введіть текст:</label>
+            <textarea class="form-control" id="textInput" name="inputText" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-warning">Розпізнати PII</button>
+    </form>
+
+    @if (ViewBag.PiiError != null)
+    {
+        <div class="alert alert-danger mt-3">@ViewBag.PiiError</div>
+    }
+
+    @if (ViewBag.RedactedText != null)
+    {
+        <div class="mt-4">
+            <h4>Текст з прихованою особистою інформацією:</h4>
+            <p class="alert alert-info">@ViewBag.RedactedText</p>
+
+            <h4>Знайдені особисті дані:</h4>
+            <ul class="list-group">
+                @foreach (var entity in ViewBag.PiiEntities)
+                {
+                    <li class="list-group-item">
+                        <strong>@entity.Text</strong> - @entity.Category (@entity.ConfidenceScore)
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+
+    <hr>
+
+    <form method="post" asp-action="RecognizeMedicalInfo">
+        <div class="mb-3">
+            <label for="textInputMedical" class="form-label">Введіть текст:</label>
+            <textarea class="form-control" id="textInputMedical" name="inputText" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Розпізнати медичну інформацію</button>
+    </form>
+
+    @if (ViewBag.MedError != null)
+    {
+        <div class="alert alert-danger mt-3">@ViewBag.MedError</div>
+    }
+
+    @if (ViewBag.MedicalEntities != null)
+    {
+        <div class="mt-4">
+            <h4>Результати розпізнавання медичних термінів:</h4>
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Термін</th>
+                        <th>Категорія</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entity in ViewBag.MedicalEntities)
+                    {
+                        <tr>
+                            <td>@entity.Text</td>
+                            <td>@entity.Category</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <hr>
+
+    <form method="post" asp-action="AnalyzeSentiment">
+        <div class="mb-3">
+            <label for="textSentiment" class="form-label">Введіть текст для аналізу тональності:</label>
+            <textarea class="form-control" id="textSentiment" name="inputText" rows="2"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Аналізувати тональність</button>
+    </form>
+
+    @if (ViewBag.Sentiment != null)
+    {
+        <div class="alert alert-info mt-3">Тональність тексту: <strong>@ViewBag.Sentiment</strong></div>
+    }
+</div>

@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Вчити англійську";
+}
+
+<h2 class="text-center">Вчити англійську</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-sm-6 text-center">
+            <a href="@Url.Action("Book", "Learning", new { title = "Цвіт яблуні" })">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOKEwFqOhJeMLvF52tSt41B0HbdX3negjfgA&s" alt="Цвіт яблуні" class="img-thumbnail" style="width: 150px; height: 200px; object-fit: cover;" />
+                <p>Цвіт яблуні</p>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 text-center">
+            <a href="@Url.Action("Book", "Learning", new { title = "Інтермеццо" })">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCJMPBSUv8POweoQ4u1QVayMyNWswH5pi7Kg&s" alt="Інтермеццо" class="img-thumbnail" style="width: 150px; height: 200px; object-fit: cover;" />
+                <p>Інтермеццо</p>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 text-center">
+            <a href="@Url.Action("Book", "Learning", new { title = "Старий і море" })">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-KAnwqJYjNktEmMJgeeXvq-kVrXQxE58Stw&s" alt="Старий і море" class="img-thumbnail" style="width: 150px; height: 200px; object-fit: cover;" />
+                <p>Старий і море</p>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 text-center">
+            <a href="@Url.Action("Book", "Learning", new { title = "Казка" })">
+                <img src="https://content.rozetka.com.ua/goods/images/big/343416902.jpg" alt="Казка" class="img-thumbnail" style="width: 150px; height: 200px; object-fit: cover;" />
+                <p>Казка</p>
+            </a>
+        </div>
+    </div>
+</div>

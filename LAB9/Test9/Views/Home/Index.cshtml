@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Головна сторінка";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container text-center mt-5">
+    <h1 class="mb-4">🧠 Лабораторна Інтелектуальна Система</h1>
+    <p class="lead mb-5">Обери одну з можливостей для аналізу зображень чи перевірки знань:</p>
+
+    <div class="row g-4 justify-content-center">
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="/Vision/OCR" class="btn btn-outline-primary w-100 py-3">
+                📝 OCR (Розпізнавання тексту)
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="/Vision/ImageAnalysis" class="btn btn-outline-success w-100 py-3">
+                🖼️ Image Analysis
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="/Vision/FaceDetection" class="btn btn-outline-danger w-100 py-3">
+                😎 Face Detection
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="/InteractiveNotes/Analyze" class="btn btn-outline-dark w-100 py-3">
+                📚 Magic Konspect
+            </a>
+        </div>
+    </div>
+</div>

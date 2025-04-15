@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Інтерактивний конспект";
+    var ocr = ViewBag.Ocr;
+    var analysis = ViewBag.Analysis;
+    var faces = ViewBag.Faces;
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<h2>📷 Аналіз зображення конспекту</h2>
+
+<form asp-action="Analyze" method="post" enctype="multipart/form-data" class="mt-4">
+    <div class="mb-3">
+        <label for="imageUpload" class="form-label fw-bold">Завантажте зображення конспекту:</label>
+        <input type="file" name="image" class="form-control" id="imageUpload" />
+    </div>
+    <button type="submit" class="btn btn-primary">
+        <i class="bi bi-search"></i> Аналізувати
+    </button>
+</form>
+
+@if (ocr != null)
+{
+    <h3>📝 Розпізнаний текст (OCR):</h3>
+    <div style="background:#f8f8f8; padding:10px;">
+        @foreach (var region in ocr.regions)
+        {
+            foreach (var line in region.lines)
+            {
+                foreach (var word in line.words)
+                {
+                    <span>@word.text </span>
+                }
+                <br />
+            }
+        }
+    </div>
+}
+
+@if (analysis != null)
+{
+    <h3>🔍 Аналіз зображення:</h3>
+    <p><strong>Опис:</strong> @analysis.description.captions[0]?.text</p>
+    <p><strong>Теги:</strong> @string.Join(", ", ((IEnumerable<dynamic>)analysis.tags).Select(t => (string)t.name))</p>
+
+    @if (analysis.categories.ToString().ToLower().Contains("diagram") || analysis.tags.ToString().ToLower().Contains("diagram"))
+    {
+        <p style="color:green"><strong>✅ Виявлено діаграму або схему.</strong></p>
+    }
+    else
+    {
+        <p><strong>ℹ️ Діаграм не знайдено.</strong></p>
+    }
+}
+
+@if (faces != null)
+{
+    <h3>👥 Розпізнані обличчя:</h3>
+    <p>Кількість облич: @faces.Count</p>
+    @if (faces.Count > 0)
+    {
+        <p style="color:red"><strong>⚠️ Увага: Виявлено людей на зображенні. Це може бути порушенням конфіденційності.</strong></p>
+    }
+}

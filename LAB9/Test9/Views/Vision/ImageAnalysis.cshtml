@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Аналіз зображення";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">🧠 Аналіз зображення</h2>
+
+    <form asp-action="ImageAnalysis" asp-controller="Vision" method="post" enctype="multipart/form-data" class="mb-4">
+        <div class="mb-3">
+            <label for="imageInput" class="form-label">Оберіть зображення</label>
+            <input type="file" class="form-control" id="imageInput" name="image" accept="image/*" required />
+        </div>
+        <button type="submit" class="btn btn-primary">🔍 Аналізувати</button>
+    </form>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@Html.Raw(ViewBag.Error)</div>
+    }
+
+    @if (ViewBag.Result != null)
+    {
+        <div class="card shadow p-4">
+            <h4 class="card-title mb-3">📄 Опис</h4>
+            <p class="lead">@ViewBag.Result.description.captions[0].text</p>
+
+            <h5 class="mt-4">🎨 Кольори</h5>
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Домінуючий передній план:
+                    <span class="badge bg-secondary">@ViewBag.Result.color.dominantColorForeground</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Домінуючий задній план:
+                    <span class="badge bg-secondary">@ViewBag.Result.color.dominantColorBackground</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Акцентний колір:
+                    <span class="badge bg-info text-dark">#@ViewBag.Result.color.accentColor</span>
+                </li>
+            </ul>
+        </div>
+    }
+</div>

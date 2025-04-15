@@ -1,0 +1,210 @@
+﻿@{
+    ViewData["Title"] = "Immersive Reader Library";
+}
+
+@section Styles {
+    <style>
+        .book-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .book-card {
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+            text-align: center;
+            position: relative;
+        }
+
+            .book-card a.cover {
+                display: block;
+                width: 100%;
+                height: 180px;
+                background-size: cover;
+                background-position: center;
+                border-radius: 8px;
+                margin-bottom: 10px;
+            }
+
+        .book-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .read-button {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .read-button:hover {
+                transform: scale(1.05);
+                background: linear-gradient(to right, #8e2de2, #4a00e0);
+            }
+
+        .butterfly {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: url('https://cdn-icons-png.flaticon.com/512/616/616430.png') no-repeat center center;
+            background-size: contain;
+            animation: fly 1.5s ease-in forwards;
+            pointer-events: none;
+            z-index: 2001;
+        }
+
+        @@keyframes fly {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-200px);
+                opacity: 0;
+            }
+        }
+
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text-launch {
+            margin: 60px auto;
+            max-width: 700px;
+        }
+
+            .text-launch textarea {
+                width: 100%;
+                padding: 20px;
+                border-radius: 12px;
+                border: 1px solid #ced4da;
+                resize: vertical;
+                min-height: 120px;
+                font-size: 16px;
+            }
+    </style>
+}
+
+<div class="container">
+    <h2 class="text-center mt-4">📚 Interactive Library</h2>
+
+    <div class="book-grid">
+    
+        @foreach (var book in new[] {
+        new { Id = "appletree", Title = "Blossom of the Apple Tree", Img = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3FS0NDoaNqsJhNCIQbptzxd-9wXk-nZlsjA&s" },
+        new { Id = "intermezzo", Title = "Intermezzo", Img = "https://static.yakaboo.ua/media/cloudflare/product/webp/600x840/c/o/cover_65_102.jpg" },
+        new { Id = "thetale", Title = "The Tale by Stephen King", Img = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1647789287l/60177373.jpg" }
+        })
+        {
+            <div class="book-card">
+                <a class="cover" style="background-image: url('@book.Img');"></a>
+                <div class="book-title">@book.Title</div>
+                <button class="read-button book-read-btn" data-id="@book.Id">Read</button>
+            </div>
+        }
+    </div>
+
+    <div class="text-launch">
+        <h4 class="text-center mt-5">🌟 Try Immersive Reader</h4>
+        <div class="card p-4 shadow-sm">
+            <textarea id="customText" placeholder="Write your magical story here..."></textarea>
+            <div class="text-center mt-3">
+                <button class="read-button immersive-reader-button">Read with Immersive Reader</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="overlay">
+    <h2 class="text-center">Loading your story...</h2>
+</div>
+
+@section Scripts {
+    <script src="https://ircdname.azureedge.net/immersivereadersdk/immersive-reader-sdk.1.4.0.js"></script>
+    <script>
+        function getTokenAndSubdomainAsync() {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: "@Url.Action("GetTokenAndSubdomain", "Home")",
+                    type: "GET",
+                    success: function (data) {
+                        data.error ? reject(data.error) : resolve(data);
+                    },
+                    error: reject
+                });
+            });
+        }
+
+        $(".immersive-reader-button").click(function (e) {
+            spawnButterflies(e);
+            handleLaunchImmersiveReader();
+        });
+
+        $(".book-read-btn").click(function (e) {
+            const bookId = $(this).data("id");
+            spawnButterflies(e);
+            showOverlay();
+            setTimeout(() => {
+                window.location.href = '@Url.Action("Book", "Home")' + "?id=" + bookId;
+            }, 1800); 
+        });
+
+        function handleLaunchImmersiveReader() {
+            const userText = $("#customText").val().trim() || "Please enter your story above!";
+            getTokenAndSubdomainAsync()
+                .then(response => {
+                    ImmersiveReader.launchAsync(
+                        response.token,
+                        response.subdomain,
+                        {
+                            title: "Your Story",
+                            chunks: [{ content: userText, mimeType: "text/plain" }]
+                        },
+                        { onExit: () => console.log("Closed"), uiZIndex: 2000 }
+                    );
+                })
+                .catch(error => alert("Immersive Reader Error: " + error));
+        }
+
+        function spawnButterflies(e) {
+            for (let i = 0; i < 8; i++) {
+                const butterfly = document.createElement("div");
+                butterfly.classList.add("butterfly");
+                butterfly.style.left = `${e.pageX - 20 + Math.random() * 60}px`;
+                butterfly.style.top = `${e.pageY - 20 + Math.random() * 60}px`;
+                document.body.appendChild(butterfly);
+                setTimeout(() => butterfly.remove(), 1500);
+            }
+        }
+
+        function showOverlay() {
+            $("#overlay").fadeIn();
+        }
+    </script>
+}

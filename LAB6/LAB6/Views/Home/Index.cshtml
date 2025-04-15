@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "NER Аналізатор";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">NER Аналізатор</h2>
+
+    <form method="post" asp-action="NER" class="mb-4">
+        <div class="mb-3">
+            <label for="textInput" class="form-label">Введіть текст для аналізу</label>
+            <textarea id="textInput" name="text" class="form-control" rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Аналізувати</button>
+    </form>
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Message</div>
+    }
+
+    @if (ViewBag.Entities != null)
+    {
+        <h3 class="mt-4">Розпізнані сутності:</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Текст</th>
+                    <th>Категорія</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entity in ViewBag.Entities)
+                {
+                    <tr>
+                        <td>@entity.Text</td>
+                        <td>@entity.Category</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+<form method="post" asp-action="GenerateTest">
+    <button type="submit" class="btn btn-warning w-100 mt-2">Створити тест</button>
+</form>
+
+@if (ViewBag.TestQuestions != null)
+{
+    <h3 class="mt-4">Автоматично згенерований тест:</h3>
+    <form method="post" asp-action="CheckTest">
+        @foreach (var question in ViewBag.TestQuestions)
+        {
+            <div class="mb-3">
+                <p><strong>@question.Text</strong></p>
+                @foreach (var option in question.Options)
+                {
+                    string highlightClass = "";
+                    if (question.UserAnswer != null)
+                    {
+                        if (option == question.CorrectAnswer)
+                        {
+                            highlightClass = "text-success fw-bold"; 
+                        }
+                        else if (option == question.UserAnswer)
+                        {
+                            highlightClass = "text-danger"; 
+                        }
+                    }
+
+                    <div class="form-check">
+                        <input type="radio" name="@question.Id" value="@option"
+                               class="form-check-input"
+                        @(question.UserAnswer == option ? "checked" : "")>
+                        <label class="form-check-label @highlightClass">@option</label>
+                    </div>
+                }
+            </div>
+        }
+        <button type="submit" class="btn btn-primary">Перевірити відповіді</button>
+    </form>
+}
+@if (ViewBag.Score != null && ViewBag.TotalQuestions != null)
+{
+    <div class="alert alert-info mt-4">
+        <strong>Результат:</strong> Ви відповіли правильно на @ViewBag.Score із @ViewBag.TotalQuestions запитань.
+    </div>
+}
+

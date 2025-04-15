@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = ViewBag.BookTitle;
+}
+
+<h2>@ViewBag.BookTitle</h2>
+
+<p id="bookText">
+    @Model
+</p>
+
+<hr>
+
+<p>Клікніть на слово для перекладу:</p>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#bookText').on('click', 'span', function () {
+            var word = $(this).text();
+
+            $.post('/Learning/TranslateWord', { word: word }, function (data) {
+                alert('Переклад: ' + data.translation);
+            });
+
+            $(this).css('text-decoration', 'underline');
+        });
+
+        var text = $('#bookText').text();
+        var words = text.split(' ');
+
+        $('#bookText').html('');
+        words.forEach(function (word) {
+            var span = $('<span>').text(word + ' ').css('cursor', 'pointer');
+            $('#bookText').append(span);
+        });
+    });
+</script>
+
+<style>
+    #bookText span {
+        cursor: pointer;
+    }
+
+    #bookText span:hover {
+        background-color: #f0f0f0; 
+    }
+</style>

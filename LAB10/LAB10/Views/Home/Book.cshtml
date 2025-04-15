@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = ViewBag.Title;
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4" id="ir-title">@ViewBag.Title</h2>
+    <div class="mb-3">
+        <button class="btn btn-outline-dark immersive-reader-button">🔊 Read with Immersive Reader</button>
+    </div>
+    <div class="border p-3 rounded bg-light" id="ir-content">
+        <p>@Html.Raw(ViewBag.Content)</p>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://ircdname.azureedge.net/immersivereadersdk/immersive-reader-sdk.1.4.0.js"></script>
+    <script>
+        function getTokenAndSubdomainAsync() {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: "@Url.Action("GetTokenAndSubdomain", "Home")",
+                    type: "GET",
+                    success: function (data) {
+                        if (data.error) {
+                            reject(data.error);
+                        } else {
+                            resolve(data);
+                        }
+                    },
+                    error: function (err) {
+                        reject(err);
+                    }
+                });
+            });
+        }
+
+        $(".immersive-reader-button").click(function () {
+            handleLaunchImmersiveReader();
+        });
+
+        function handleLaunchImmersiveReader() {
+            getTokenAndSubdomainAsync()
+                .then(function (response) {
+                    const token = response["token"];
+                    const subdomain = response["subdomain"];
+
+                    const data = {
+                        title: $("#ir-title").text(),
+                        chunks: [{
+                            content: $("#ir-content").html(),
+                            mimeType: "text/html"
+                        }]
+                    };
+
+                    const options = {
+                        "onExit": exitCallback,
+                        "uiZIndex": 2000
+                    };
+
+                    ImmersiveReader.launchAsync(token, subdomain, data, options)
+                        .catch(function (error) {
+                            alert("Error in launching the Immersive Reader. Check the console.");
+                            console.log(error);
+                        });
+                })
+                .catch(function (error) {
+                    alert("Error in getting the Immersive Reader token and subdomain. Check the console.");
+                    console.log(error);
+                });
+        }
+
+        function exitCallback() {
+            console.log("Immersive Reader closed.");
+        }
+    </script>
+}

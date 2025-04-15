@@ -1,0 +1,59 @@
+# .NET build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Dd]ist/
+[Dd]ebug/*/
+[Dd]ebugPublic/*/
+[Dd]ist/*/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# User-specific files for JetBrains Rider
+.idea/
+
+# ASP.NET temporary files
+# VS for Mac
+.vscode/
+
+# ASP.NET related files
+.vs/
+.vscode/
+bin/
+obj/
+
+# Azure Web Apps
+.local/
+
+# Uncomment if you have tasks that create project's version numbers
+#project.lock.json
+#project.fragment.lock.json
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer files
+Thumbs.db
+Desktop.ini
+
+# Windows Installer files
+*.pdb
+
+# Ignore appsettings.json where secrets might be stored
+appsettings.json
+
+# Ignore environment-specific appsettings
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+
+# Ignore files that may contain sensitive data
+*.key
+*.pem
+*.cer

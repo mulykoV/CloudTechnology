@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Перекладач тексту";
+}
+
+<h2>Переклад тексту</h2>
+
+<form method="post" asp-action="Translate">
+    <div class="form-group">
+        <label for="inputText">Введіть текст:</label>
+        <textarea id="inputText" name="inputText" class="form-control" rows="3">@ViewBag.InputText</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="targetLanguage">Оберіть мову перекладу:</label>
+        <select id="targetLanguage" name="targetLanguage" class="form-control">
+            <option value="en">Англійська</option>
+            <option value="fr">Французька</option>
+            <option value="es">Іспанська</option>
+            <option value="de">Німецька</option>
+            <option value="uk">Українська</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Перекласти</button>
+</form>
+
+<hr>
+
+@if (ViewBag.TranslatedText != null)
+{
+    <h3 class="mt-3">Перекладений текст:</h3>
+    <p><strong>Оригінальний текст:</strong></p>
+    <pre>@ViewBag.InputText</pre>
+
+    <p><strong>Перекладений текст:</strong></p>
+    <pre>@ViewBag.TranslatedText</pre>
+}
+
+<h3>Переклад файлу</h3>
+<form method="post" asp-action="TranslateFile" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="file">Оберіть файл (TXT):</label>
+        <input type="file" name="file" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="fileTargetLanguage">Оберіть мову перекладу:</label>
+        <select id="fileTargetLanguage" name="targetLanguage" class="form-control">
+            <option value="en">Англійська</option>
+            <option value="fr">Французька</option>
+            <option value="es">Іспанська</option>
+            <option value="de">Німецька</option>
+            <option value="uk">Українська</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">Перекласти файл</button>
+</form>
+
+@if (ViewBag.TranslatedFileText != null)
+{
+    <h3 class="mt-3">Результат перекладу файлу:</h3>
+    <p><strong>Оригінальний текст:</strong></p>
+    <pre>@ViewBag.FileContent</pre>
+
+    <p><strong>Перекладений текст:</strong></p>
+    <pre>@ViewBag.TranslatedFileText</pre>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-3">@ViewBag.Error</div>
+}

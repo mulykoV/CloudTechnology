@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Розпізнавання тексту (OCR)";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">📄 Розпізнавання тексту (OCR)</h2>
+
+    <form asp-action="OCR" asp-controller="Vision" method="post" enctype="multipart/form-data" class="mb-4">
+        <div class="mb-3">
+            <label for="imageInput" class="form-label">Оберіть зображення</label>
+            <input type="file" class="form-control" id="imageInput" name="image" accept="image/*" required />
+        </div>
+        <button type="submit" class="btn btn-success">🔍 Розпізнати</button>
+    </form>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@Html.Raw(ViewBag.Error)</div>
+    }
+
+    @if (ViewBag.Result != null)
+    {
+        <div class="card shadow p-4">
+            <h4 class="card-title mb-3">📝 Розпізнаний текст</h4>
+            <pre class="bg-light p-3 border rounded" style="white-space: pre-wrap;">
+                @foreach (var region in ViewBag.Result.regions)
+                {
+                    foreach (var line in region.lines)
+                    {
+                        foreach (var word in line.words)
+                        {
+                            @word.text 
+                        }
+                    <br />
+                    }
+                }
+                    </pre>
+        </div>
+    }
+</div>
